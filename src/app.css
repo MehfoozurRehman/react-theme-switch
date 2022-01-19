@@ -1,0 +1,11 @@
+html {
+  --black: black;
+}
+html[data-theme="light"] {
+  --black: white;
+}
+.hey {
+  width: 100px;
+  height: 100px;
+  background-color: var(--black);
+}
