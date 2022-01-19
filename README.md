@@ -4,7 +4,7 @@ A light / dark theme switcher based on css theme properties that respects user o
 
 ## Usage
 
-![Screenshot](./public/example.png)
+![Screenshot](./public/example.gif)
 
 ## Usage
 
