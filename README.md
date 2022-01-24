@@ -2,7 +2,7 @@
 
 A light / dark theme switcher based on css theme properties that respects user os preferences and stores user preference with the site
 
-## Usage
+## Example
 
 ![Screenshot](./public/example.gif)
 
