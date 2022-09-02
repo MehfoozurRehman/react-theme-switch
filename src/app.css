@@ -2,7 +2,7 @@ html {
   --black: black;
 }
 html[data-theme="light"] {
-  --black: white;
+  --black: blue;
 }
 .hey {
   width: 100px;
