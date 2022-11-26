@@ -1,5 +1,7 @@
-import ThemeSwitch from "./lib";
 import "./app.css";
+
+import ThemeSwitch from "./lib";
+
 function App() {
   return (
     <div className="App">

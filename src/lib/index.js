@@ -1,5 +1,6 @@
-import React from "react";
 import "./index.1a7d16c2.css";
+
+import React from "react";
 
 const storageKey = "theme-preference";
 
