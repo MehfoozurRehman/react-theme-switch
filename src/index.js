@@ -1,69 +1,55 @@
 import "./style.css";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function ThemeSwitch() {
+const ThemeSwitch = () => {
   const storageKey = "theme-preference";
+  const [theme, setTheme] = useState(
+    () =>
+      localStorage.getItem(storageKey) ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light")
+  );
 
   const onClick = () => {
-    // flip current value
-    theme.value = theme.value === "light" ? "dark" : "light";
-
-    setPreference();
-  };
-
-  const getColorPreference = () => {
-    if (localStorage.getItem(storageKey))
-      return localStorage.getItem(storageKey);
-    else
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-  };
-
-  const setPreference = () => {
-    localStorage.setItem(storageKey, theme.value);
-    reflectPreference();
-  };
-
-  const reflectPreference = () => {
-    document.firstElementChild.setAttribute("data-theme", theme.value);
-
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem(storageKey, newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
     document
       .querySelector("#theme-toggle")
-      ?.setAttribute("aria-label", theme.value);
+      ?.setAttribute("aria-label", newTheme);
   };
-
-  const theme = {
-    value: getColorPreference(),
-  };
-
-  // set early so no page flashes / CSS is made aware
 
   useEffect(() => {
-    reflectPreference();
+    document.documentElement.setAttribute("data-theme", theme);
+    const themeToggle = document.querySelector("#theme-toggle");
+    if (themeToggle) {
+      themeToggle.addEventListener("click", onClick);
+    }
 
-    window.onload = () => {
-      // set on load so screen readers can see latest value on the button
-      reflectPreference();
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleMediaQueryChange = ({ matches: isDark }) => {
+      setTheme(isDark ? "dark" : "light");
     };
-    // now this script can find and listen for clicks on the control
-    document.querySelector("#theme-toggle").addEventListener("click", onClick);
-    // sync with system changes
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", ({ matches: isDark }) => {
-        theme.value = isDark ? "dark" : "light";
-        setPreference();
-      });
-  }, []);
+
+    mediaQueryList.addEventListener("change", handleMediaQueryChange);
+
+    return () => {
+      if (themeToggle) {
+        themeToggle.removeEventListener("click", onClick);
+      }
+      mediaQueryList.removeEventListener("change", handleMediaQueryChange);
+    };
+  }, [theme]);
 
   return (
     <button
       className="theme-toggle"
       id="theme-toggle"
       title="Toggles light & dark"
-      aria-label="auto"
+      aria-label={theme}
       aria-live="polite"
     >
       <svg
@@ -98,4 +84,4 @@ export default function ThemeSwitch() {
       </svg>
     </button>
   );
-}
+};
