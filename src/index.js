@@ -85,3 +85,5 @@ const ThemeSwitch = () => {
     </button>
   );
 };
+
+export default ThemeSwitch;
