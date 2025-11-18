@@ -30,10 +30,10 @@
     "build": "babel src --out-dir dist --copy-files"
   },
   "devDependencies": {
-    "@babel/cli": "^7.25.9",
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/preset-react": "^7.25.9",
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
     "babel-preset-minify": "^0.5.2"
   }
 }
